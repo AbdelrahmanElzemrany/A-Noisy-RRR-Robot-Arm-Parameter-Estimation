@@ -185,7 +185,6 @@ Where \(e = q_d - q\) represents the localized tracking joint error vector loop 
 
 ```
 
-
 $$
 \begin{array}{c}
 q_d, \dot{q}_d, \ddot{q}_d \\
