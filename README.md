@@ -198,7 +198,7 @@ $$
 \nwarrow \quad \text{Feedback } (q, \dot{q}) \quad \swarrow
 $$
 
-.....
+----------
 ......
 
 <img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
