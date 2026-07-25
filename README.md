@@ -184,15 +184,10 @@ q_d, q_d_dot, q_d_ddot
       |
       v
 [Tracking Error Loop] ---> u ---> [ Inverse Dynamics Model ] ---> Joint Torques ---> [ Simscape Robot ]
-      ^                              The **Inverse Dynamics Model** $(\theta_b)$ calculates the required joint torques.
-
-)                               |
+      ^                                  ($\theta_b$)                                         |
 
       |                                                                                       |
       +---------------------------------- Feedback (q, q_dot) --------------------------------+
-
-
-
 
 ```
 <img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
