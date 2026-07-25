@@ -192,6 +192,21 @@ q_d, q_d_dot, q_d_ddot
       +---------------------------------- Feedback (q, q_dot) --------------------------------+
 ```
 
+
+$$
+\begin{array}{c}
+q_d, \dot{q}_d, \ddot{q}_d \\
+\downarrow \\
+\mathbf{[Tracking~Error~Loop]} \xrightarrow{\quad u \quad} \mathbf{[Inverse~Dynamics~Model]} \xrightarrow{\text{Joint Torques}} \mathbf{[Simscape~Robot]} \\
+(\theta_b) \\
+\end{array}
+$$
+
+$$
+\nwarrow \quad \text{Feedback } (q, \dot{q}) \quad \swarrow
+$$
+
+
 <img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
 
 Figure 7 : The computeed torque controller RRR robot arm configuration surface level
