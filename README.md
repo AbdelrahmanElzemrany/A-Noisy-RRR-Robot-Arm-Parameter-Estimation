@@ -25,7 +25,7 @@ The framework utilizes proximal Denavit-Hartenberg (DH) convention parameters to
 
 These variables are analytically decoupled from the nonlinear equations of motion to form a custom symbolic identification regressor matrix ($Y_b$). This structural rearrangement ensures that the multi-joint dynamic torque matches a linear-in-the-parameters equation model:
 
-$$ \tau = Y_b(q, \dot{q}, \ddot{q}) \cdot \theta $$
+$$ \tau = Y_b(q, \dot{q}, \ddot{q}) \cdot \theta_b $$
 
 ### 2. Bounded Excitation Trajectory Optimizer (Step_2)
 To guarantee optimal noise rejection during estimation, the robot must follow a trajectory that excites all parameters evenly. The path is modeled as a multi-harmonic finite Fourier series. 
