@@ -45,6 +45,7 @@ Figure 1 The excitaion trajectory .
 
 ### 3. Simscape Plant Excitation Experiment (Step_3)
 The optimized finite-harmonic reference signals are dispatched directly to the closed-loop tracking architecture. A continuous-time feedback controller drives the 3-DOF RRR Simscape digital twin across the workspace paths. During this phase, physical dynamic parameters, Viscous-Coulomb joint dampening forces, and high-frequency sensor measurement noise are generated concurrently within the Simscape plant model.
+
 ---------
 <img width="1850" height="727" alt="image" src="https://github.com/user-attachments/assets/0d61711c-ff64-4f4d-9bb9-45d80195282a" />
 Figure 2 The excitation experiment configuration .
