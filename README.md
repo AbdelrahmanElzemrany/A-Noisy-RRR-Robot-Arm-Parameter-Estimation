@@ -47,46 +47,20 @@ Raw sensor captures output enormous high-frequency time-series datasets that str
 Simultaneously, a localized windowing array crops out the first and last chunks of data (e.g., a 100-sample window baseline). This eliminates aggressive transient edge spikes induced by numerical central-difference gradients at the absolute boundaries of the data collection window.
 
 ### 5. High-Fidelity Data Filtering & Conditioning (Step_5)
-Unlike noise-free variants, parameter identification scripts fail when processing raw, noisy sensor data. Step_5 routes the downsampled position arrays through a zero-phase, 4th-order low-pass Butterworth filter architecture (`filtfilt`). Forward-backward filtering eliminates time-lag delays, preserving exact synchronization between joint variables. 
+Unlike noise-free variants, parameter identification scripts fail when processing raw, noisy sensor data. Step_5 runs a filtered position and raw torque approach to condition the data matrix.
 
 ```text
-               +----------------------------------+
-
-               |        Raw Position Data [q]     |
-               +----------------------------------+
-                                |
-                                v
-               +----------------------------------+
-
-               |  Zero-Phase Butterworth Filter   |
-               +----------------------------------+
-                                |
-                                v
-               +----------------------------------+
-
-               |    Central Difference Method     |
-               +----------------------------------+
-                                |
-                                v
-               +----------------------------------+
-
-               |       Joint Velocity [q_dot]     |
-               +----------------------------------+
-                                |
-                                v
-               +----------------------------------+
-
-               |     Savitzky-Golay Smoothing     |
-               +----------------------------------+
-                                |
-                                v
-               +----------------------------------+
-
-               |    Filtered Acceleration [q_ddot]|
-               +----------------------------------+
+[Raw Position q] ---> [Zero-Phase Butterworth Filter] ---> [Central Difference #1] ---> [Velocity q_dot]
+                                                                                            |
+                                                                                            v
+[Filtered Acceleration q_ddot] <------------------------------------------ [Central Difference #2]
 ```
 
-Velocities ($\dot{q}$) and accelerations ($\ddot{q}$) are analytically synthesized via central-difference gradients, followed by a secondary low-pass filtering loop on the target torque channels ($\tau$) to isolate unmodeled sensor chatter before running the convex optimization engine.
+The signal processing pipeline executes the following sequential steps:
+1. **Zero-Phase Digital Filtering**: Raw joint positions ($q$) are passed forward and backward through a low-pass, 4th-order Butterworth filter to isolate tracking states without injecting phase lag.
+2. **First Central Difference**: Joint velocities ($\dot{q}$) are synthesized directly from the filtered position data via numerical central-difference gradients (`gradient`).
+3. **Second Central Difference**: Joint accelerations ($\ddot{q}$) are derived by running a secondary central-difference gradient operation directly on the synthesized velocities.
+4. **Target Vector Routing**: The estimation engine matches these states directly against the raw, unconditioned joint motor torques ($\tau$) to maintain direct structural visibility over raw torque profiles.
 
 ### 6. Physical Consistency & Epsilon ($\varepsilon$) Sensitivity Analysis
 To keep parameters physically realistic, the `fmincon` objective function evaluates tracking error alongside strict structural constraints. It evaluates eigenvalues over a $5 \times 5 \times 5$ configuration grid (125 distinct workspace poses) to enforce a strictly positive-definite Mass/Inertia matrix ($M(q) > 0$).
@@ -134,3 +108,16 @@ robot-identification-repo/
 ├── Step_9_ReformTheEstimatedMatrices.m     <-- Matrix decoupling reformer
 ├── Step_10_CheckPositive.m                 <-- 27,000-point physical QA guard
 ├── Step_11_Results.m                       <-- Metrics reporting and plotting utility
+└── Step_11_TheEstimatedINVDynamicsMatricesCTC.slx <-- Closed-loop noisy CTC tracking model
+```
+
+---
+
+## ⚠️ Hardware & Memory Constraints Note
+
+Symbolically evaluating or validating a full joint-space mass matrix $M(q)$ across dynamic trajectories can introduce severe RAM allocations and processing delays. To prevent memory stack overflows, ensure your development environment has at least 16 GB of RAM when running the 27,000-point physical QA guard (`Step_10_CheckPositive.m`).
+
+---
+
+
+
