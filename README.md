@@ -42,9 +42,23 @@ Using Sequential Quadratic Programming (`fmincon` with SQP), the optimizer sweep
 The optimized finite-harmonic reference signals are dispatched directly to the closed-loop tracking architecture. A continuous-time feedback controller drives the 3-DOF RRR Simscape digital twin across the workspace paths. During this phase, physical dynamic parameters, Viscous-Coulomb joint dampening forces, and high-frequency sensor measurement noise are generated concurrently within the Simscape plant model.
 
 ### 4. Data Extraction, Decimation & Windowing (Step_4)
-Raw sensor captures output enormous high-frequency time-series datasets that strain processor memory allocations. Step_4 executes a downsampling data decimation step to lower the overall sample density while perfectly preserving the underlying low-frequency rigid-body dynamics. 
+Raw sensor captures output enormous high-frequency time-series datasets that strain processor memory allocations. Step_4 executes a downsampling data decimation step to lower the overall sample density while perfectly preserving the underlying low-frequency rigid-body dynamics.
 
-Simultaneously, a localized windowing array crops out the first and last chunks of data (e.g., a 100-sample window baseline). This eliminates aggressive transient edge spikes induced by numerical central-difference gradients at the absolute boundaries of the data collection window.
+#### The Operational Importance of Data Cropping
+A critical phase of data conditioning involves applying a localized boundary window (`crop_idx = 100`) to completely discard the initial and final chunks of the execution dataset. When calculating tracking velocities (q̇) and accelerations (q̈) via forward/backward numerical differentiation schemes, the math breaks down at the temporal boundaries of the dataset due to missing historical points. 
+
+```text
+  [ Raw Data Edge Spike ]                                              [ Raw Data Edge Spike ]
+
+         |                                                                    |
+         v                                                                    v
+
+   |--- TRUNCATED ---|================= ACTIVE OPTIMIZATION DATA ================|--- TRUNCATED ---|
+   0            crop_idx                                                     l-crop_idx            l
+```
+
+Without data cropping, running numerical central-difference arrays creates massive, synthetic transient spikes at the outer edges of your vectors. Leaving these mathematical artifacts intact injects corrupt singular gradients into the symbolic observation regressor matrix ($Y_c$). By truncating these boundary segments, the solver optimization loops operate purely on uncontaminated, steady-state rigid-body trajectories.
+
 
 ### 5. High-Fidelity Data Filtering & Conditioning (Step_5)
 Unlike noise-free variants, parameter identification scripts fail when processing raw, noisy sensor data. Step_5 runs a filtered position and raw torque approach to condition the data matrix.
