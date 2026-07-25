@@ -219,7 +219,7 @@ Figure 8 : The construction of the computed torque controller
 Run the scripts in numerical order to move from kinematic setup to validated CTC control:
 
 ```text
-robot-identification-repo/
+Noisy-RRR-Robot-Arm-Parameter-Estimation/
 ├── Step_1_TheRegressorModel.m              <-- Custom symbolic matrix processing engine
 ├── Step_2_excitation_trajectory.m          <-- Fourier trajectory path optimizer
 ├── Step_3_ParameterExcitation.slx          <-- Data acquisition plant (Simscape Multibody)
