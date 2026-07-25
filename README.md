@@ -126,6 +126,43 @@ To guarantee that the estimated parameter model does not overfit to the initial 
 
 The identified model parameters are tested against an entirely independent validation trajectory profile featuring distinct amplitude profiles, frequencies, and workspace pathways. By driving the model-based reconstruction equations using this unseen dataset and checking estimated torque tracking against independent experimental recordings, the framework confirms that the parameter vector maps true structural hardware realities rather than single-trajectory behavior.
 
+
+---------------
+<img width="1917" height="918" alt="image" src="https://github.com/user-attachments/assets/82a2b9f7-5c0b-411c-a237-619c27e82831" />
+Figure 5 A slow trajectory validation.
+
+-----------
+| Experiment element | Metric | Value |
+| :--- | :--- | :--- |
+| **Joint 1 (Base Yaw)** | Fit Percentage | 99.12 % |
+| **Joint 2 (Shoulder)** | Fit Percentage | 99.48 % |
+| **Joint 3 (Elbow)** | Fit Percentage | 98.72 % |
+| **OVERALL CROSS-VALIDATION ACCURACY** | | **99.54 %** |
+
+------------
+<img width="1917" height="923" alt="image" src="https://github.com/user-attachments/assets/c3d03bd5-51cd-40f5-8c4d-4eeb1b130cac" />
+Figure 6 A fast and aggressive trajectory validation
+
+----------
+
+
+
+| Experiment element | Metric | Value |
+| :--- | :--- | :--- |
+| **Joint 1 (Base Yaw)** | Fit Percentage | 99.22 % |
+| **Joint 2 (Shoulder)** | Fit Percentage | 99.41 % |
+| **Joint 3 (Elbow)** | Fit Percentage | 98.58 % |
+| **OVERALL CROSS-VALIDATION ACCURACY** | | **99.44 %** |
+
+
+
+
+
+
+
+
+
+
 ### 7. Physical Consistency & Epsilon ($\varepsilon$) Sensitivity Analysis
 To keep parameters physically realistic, the `fmincon` objective function evaluates tracking error alongside strict structural constraints. It evaluates eigenvalues over a $5 \times 5 \times 5$ configuration grid (125 distinct workspace poses) to enforce a strictly positive-definite Mass/Inertia matrix ($M(q) > 0$).
 
@@ -151,7 +188,21 @@ q_d, q_d_dot, q_d_ddot
 
       |                                                                                       |
       +---------------------------------- Feedback (q, q_dot) --------------------------------+
+
+
+
+
 ```
+<img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
+
+Figure 7 : The computeed torque controller RRR robot arm configuration surface level
+
+---------
+<img width="1405" height="731" alt="image" src="https://github.com/user-attachments/assets/ea83d2de-6d63-4b2f-838a-9a8648f3f857" />
+
+Figure 8 : The construction of the computed torque controller 
+
+
 
 ---
 
