@@ -184,7 +184,8 @@ q_d, q_d_dot, q_d_ddot
       |
       v
 [Tracking Error Loop] ---> u ---> [ Inverse Dynamics Model ] ---> Joint Torques ---> [ Simscape Robot ]
-      ^                               (Using Identified $$ \theta_b $$)                               |
+      ^                               (Using Identified  ($\theta_b$)
+)                               |
 
       |                                                                                       |
       +---------------------------------- Feedback (q, q_dot) --------------------------------+
