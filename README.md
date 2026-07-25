@@ -110,3 +110,41 @@ robot-identification-repo/
 ├── Step_6_testingTheEstimatedParameters.slx <-- Validation trajectory plant
 ├── Step_7_DataextractForSecondExpValidation.slx <-- Independent validation dataset parser
 ├── Step_8_Validation_of_Estimation.m       <-- Multitarget cross-validation verification tool
+├── Step_9_ReformTheEstimatedMatrices.m     <-- Matrix decoupling reformer
+├── Step_10_CheckPositive.m                 <-- 27,000-point physical QA guard
+├── Step_11_Results.m                       <-- Metrics reporting and plotting utility
+├── Step_11_TheEstimatedINVDynamicsMatricesCTC.slx <-- Closed-loop noisy CTC tracking model
+├── get_RRR_M_sfun.m                        <-- S-function block for Inertia Matrix evaluation
+├── get_RRR_C_sfun.m                        <-- S-function block for Coriolis Matrix evaluation
+└── get_RRR_G_sfun.m                        <-- S-function block for Gravity Vector evaluation
+```
+
+---
+
+## ⚠️ Hardware & Memory Constraints Note
+
+Symbolically evaluating or validating a full joint-space mass matrix $M(q)$ across dynamic trajectories can introduce severe RAM allocations and processing delays. To prevent memory stack overflows, ensure your development environment has at least 16 GB of RAM when running the 27,000-point physical QA guard (`Step_10_CheckPositive.m`).
+
+---
+
+## 🚀 Getting Started & Execution Guide
+
+To run the complete framework pipeline from scratch, follow these execution phases step-by-step:
+
+### Phase 1: Structural Setup & Path Generation
+1. **Run `Step_1_TheRegressorModel.m`**: Parses your proximal Denavit-Hartenberg structures to construct and write the symbolic regressor matrix files to disk.
+2. **Run `Step_2_excitation_trajectory.m`**: Launches the bounded multi-harmonic optimization setup to output your targeted system trajectories.
+
+### Phase 2: Plant Simulation & Data Cleaning
+3. **Open & Run `Step_3_ParameterExcitation.slx`**: Activates the Simscape mechanics solver loop to log active torques against injected sensor tracking noise.
+4. **Open & Run `Step_4_DataextractForParameterEstimation.slx`**: Truncates edge transients via a 100-sample window baseline and decimates high-frequency datasets.
+5. **Run `Step_5_Filtered_Parameter_estimation.m`**: Drives the forward-backward Butterworth filtering engine and runs the constrained optimization solver with $\varepsilon = 0.037$.
+
+### Phase 3: Validation, Verification & Control Execution
+6. **Open & Run `Step_6_testingTheEstimatedParameters.slx`**: Feeds a completely separate, independent cross-validation trajectory profile into the Simscape plant model.
+7. **Open & Run `Step_7_DataextractForSecondExpValidation.slx`**: Segregates, saves, and compiles the validation sensor tracking responses from this distinct layout.
+8. **Run `Step_8_Validation_of_Estimation.m`**: Cross-validates mathematical fit quality by plotting estimated parameter torque reconstructions directly against raw data from the second experimental path profile.
+9. **Run `Step_9_ReformTheEstimatedMatrices.m`**: Decouples the final optimized parameter arrays back into distinct $M, C, G,$ and $F$ matrices.
+10. **Run `Step_10_CheckPositive.m`**: Loops across a dense 27,000-point workspace coordinate array to assert positive-definiteness ($M(q) > 0$).
+11. **Run `Step_11_Results.m`**: Compiles evaluation metrics and builds performance comparison plots.
+12. **Open & Run `Step_11_TheEstimatedINVDynamicsMatricesCTC.slx`**: Implements the identified system matrices using S-function interfaces (`get_RRR_M_sfun.m`, `get_RRR_C_sfun.m`, `get_RRR_G_sfun.m`) inside the Computed Torque Controller block loops to check trajectory tracking error decay under active feedback noise.
