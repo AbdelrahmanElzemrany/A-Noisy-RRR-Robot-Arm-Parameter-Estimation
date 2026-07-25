@@ -36,8 +36,34 @@ $$ q(0) = 0, \quad \dot{q}(0) = 0, \quad \ddot{q}(0) = 0 $$
 
 Using Sequential Quadratic Programming (`fmincon` with SQP), the optimizer sweeps through joint position, velocity, and acceleration limits to maximize parameter visibility by minimizing the condition number of the tracking observation matrix.
 
+--------
+<img width="1917" height="925" alt="image" src="https://github.com/user-attachments/assets/2c5949ac-72b7-40b4-bb17-b017f4b60291" />
+
+Figure 1 The excitaion trajectory .
+
+----------------
+
 ### 3. Simscape Plant Excitation Experiment (Step_3)
 The optimized finite-harmonic reference signals are dispatched directly to the closed-loop tracking architecture. A continuous-time feedback controller drives the 3-DOF RRR Simscape digital twin across the workspace paths. During this phase, physical dynamic parameters, Viscous-Coulomb joint dampening forces, and high-frequency sensor measurement noise are generated concurrently within the Simscape plant model.
+---------
+<img width="1850" height="727" alt="image" src="https://github.com/user-attachments/assets/0d61711c-ff64-4f4d-9bb9-45d80195282a" />
+Figure 2 The excitation experiment configuration .
+
+-----------------
+
+<img width="1716" height="707" alt="image" src="https://github.com/user-attachments/assets/100674f8-73a5-4767-921e-5aec86adb8b0" />
+
+Figure 3 The modeled friction torque
+
+-------------------
+
+<img width="1280" height="704" alt="Step_3_ParameterExcitation-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/89f6b4d1-7e9a-47e0-a9f6-fafdf2d8354a" />
+
+Figure 4  A visualization of the excitation step
+
+-----------
+
+
 ### 4. Data Extraction, Decimation & Windowing (Step_4)
 Raw sensor captures output enormous high-frequency time-series datasets that strain processor memory allocations. To manage this data pipeline efficiently, the framework processes the logged variables using a strict sequence: **Decimation → Filtering → Data Cropping → Observation Matrix Construction**.
 
