@@ -2,9 +2,7 @@
 
 An end-to-end framework for parameter estimation of a 3-DOF RRR serial manipulator operating under noisy sensor conditions. This repository features a custom symbolic regressor engine, a noise-isolation filtering pipeline, and a closed-loop Computed Torque Controller (CTC) validated via a Simscape Multibody digital twin.
 
-Developed by **Abdelrahman Elzemrany**.
 
-[📥 Click here to download a 170-second simulation video explaining the complete process.](A%20video.mp4)
 
 ---
 
