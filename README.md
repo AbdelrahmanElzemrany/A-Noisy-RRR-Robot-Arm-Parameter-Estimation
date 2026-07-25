@@ -239,11 +239,7 @@ robot-identification-repo/
 
 ---
 
-## ⚠️ Hardware & Memory Constraints Note
 
-Symbolically evaluating or validating a full joint-space mass matrix $M(q)$ across dynamic trajectories can introduce severe RAM allocations and processing delays. To prevent memory stack overflows, ensure your development environment has at least 16 GB of RAM when running the 27,000-point physical QA guard (`Step_10_CheckPositive.m`).
-
----
 
 ## 🚀 Getting Started & Execution Guide
 
