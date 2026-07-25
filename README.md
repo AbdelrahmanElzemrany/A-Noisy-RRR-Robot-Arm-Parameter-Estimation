@@ -32,7 +32,7 @@ These variables are analytically decoupled from the nonlinear equations of motio
 ### 2. Bounded Excitation Trajectory Optimizer (`Step_2`)
 To guarantee optimal noise rejection during estimation, the robot must follow a trajectory that excites all parameters evenly. The path is modeled as a multi-harmonic finite Fourier series. 
 
-Standard optimization algorithms manipulate 11 free parameters per joint, which frequently triggers harsh startup transients. To eliminate this issue, this pipeline implements an analytical variable reduction down to 8 variables per joint. By analytically resolving the fundamental terms (\(q_0\), \(a_1\), \(b_1\)), the trajectory guarantees zero-locked boundary initial states:
+Standard optimization algorithms manipulate 11 free parameters per joint, which frequently triggers harsh startup transients. To eliminate this issue, this pipeline implements an analytical variable reduction down to 8 variables per joint. By analytically resolving the fundamental terms (\(q_0, a_1, b_1\)), the trajectory guarantees zero-locked boundary initial states:
 
 \[q(0) = 0, \quad \dot{q}(0) = 0, \quad \ddot{q}(0) = 0\]
 
