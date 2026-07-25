@@ -41,9 +41,25 @@ Using Sequential Quadratic Programming (`fmincon` with SQP), the optimizer sweep
 ### 3. Simscape Plant Excitation Experiment (Step_3)
 The optimized finite-harmonic reference signals are dispatched directly to the closed-loop tracking architecture. A continuous-time feedback controller drives the 3-DOF RRR Simscape digital twin across the workspace paths. During this phase, physical dynamic parameters, Viscous-Coulomb joint dampening forces, and high-frequency sensor measurement noise are generated concurrently within the Simscape plant model.
 ### 4. Data Extraction, Decimation & Windowing (Step_4)
-Raw sensor captures output enormous high-frequency time-series datasets that strain processor memory allocations. Step_4 executes a downsampling data decimation step to lower the overall sample density while perfectly preserving the underlying low-frequency rigid-body dynamics.
+Raw sensor captures output enormous high-frequency time-series datasets that strain processor memory allocations. To manage this data pipeline efficiently, the framework processes the logged variables using a strict sequence: **Decimation → Filtering → Data Cropping → Observation Matrix Construction**.
 
-#### The Operational Importance of Data Cropping
+```text
+[Raw Simscape Capture] 
+         |
+         v
+ 1. DATA DECIMATION       <-- Downsamples data density to preserve processor memory
+         |
+         v
+ 2. DIGITAL FILTERING     <-- Executes zero-phase forward-backward filtfilt loops
+         |
+         v
+ 3. DATA CROPPING         <-- Throws away artificial startup/shutdown edge spikes
+         |
+         v
+ 4. REGRESSOR ASSEMBLY    <-- Constructs uncontaminated full-rank observation matrix (Yc)
+```
+
+#### The Operational Importance of Data Cropping Post-Filtering
 A critical phase of data conditioning involves applying a localized boundary window (`crop_idx = 100`) to completely discard the initial and final chunks of the execution dataset. When running zero-phase forward-backward digital filtering architectures (`filtfilt`), the filter requires a startup period to settle. This mathematical initialization introduces massive, unstable transient edge spikes at the absolute start and end boundaries of the processed array.
 
 ```text
@@ -56,11 +72,9 @@ A critical phase of data conditioning involves applying a localized boundary win
    0            crop_idx                                                       l-crop_idx            l
 ```
 
-If these filtered position states ($q$) are passed straight into subsequent numerical differentiation loops, these boundary artifacts blow up into extreme gradients that distort joint velocity ($\dot{q}$) and acceleration ($\ddot{q}$) profiles. Leaving these boundary segments un-cropped forces the optimization engine to fit unphysical outliers, breaking the convergence of the structural regressor matrix ($Y_c$). Truncating these execution segments ensures that your parameter identification loops rely entirely on clean, settled steady-state state trajectories.
+Because of this, data cropping is strictly executed **after the filtering stage** to throw away these spiked, artificial data points before they can corrupt the system. If these boundary artifacts are not thrown away, passing the filtered position states ($q$) straight into subsequent numerical differentiation loops causes them to blow up into extreme gradients that distort joint velocity ($\dot{q}$) and acceleration ($\ddot{q}$) profiles. 
 
-```
-
-Without data cropping, running numerical central-difference arrays creates massive, synthetic transient spikes at the outer edges of your vectors. Leaving these mathematical artifacts intact injects corrupt singular gradients into the symbolic observation regressor matrix ($Y_c$). By truncating these boundary segments, the solver optimization loops operate purely on uncontaminated, steady-state rigid-body trajectories.
+Leaving these boundary segments un-cropped forces the optimization engine to fit unphysical outliers, breaking the convergence of the structural regressor matrix ($Y_c$). Truncating these segments after the filtering loop ensures that your subsequent parameter identification loops rely entirely on clean, settled steady-state state trajectories.
 
 
 ### 5. High-Fidelity Data Filtering & Conditioning (Step_5)
@@ -73,11 +87,14 @@ Unlike noise-free variants, parameter identification scripts fail when processin
 [Filtered Acceleration q_ddot] <------------------------------------------ [Central Difference #2]
 ```
 
-The signal processing pipeline executes the following sequential steps:
-1. **Zero-Phase Digital Filtering**: Raw joint positions ($q$) are passed forward and backward through a low-pass, 4th-order Butterworth filter to isolate tracking states without injecting phase lag.
-2. **First Central Difference**: Joint velocities ($\dot{q}$) are synthesized directly from the filtered position data via numerical central-difference gradients (`gradient`).
-3. **Second Central Difference**: Joint accelerations ($\ddot{q}$) are derived by running a secondary central-difference gradient operation directly on the synthesized velocities.
-4. **Target Vector Routing**: The estimation engine matches these states directly against the raw, unconditioned joint motor torques ($\tau$) to maintain direct structural visibility over raw torque profiles.
+#### Why Raw Torque Data is Retained for Estimation
+While the kinematic joint positions ($q$) require filtering to allow noise-free velocity ($\dot{q}$) and acceleration ($\ddot{q}$) differentiation, the identification target vector relies strictly on **raw, unconditioned torque data ($\tau_{raw}$)**. 
+
+Filtering the measured torque channels introduces critical operational risks to the model-based engine:
+* **Preserving True High-Frequency Dynamics**: Low-pass filtering the torque can accidentally attenuate high-frequency rigid-body torque details, unmodeled joint friction signatures, and physical unmodeled chatter. 
+* **Preventing Parameter Phase Lag Distortion**: Even zero-phase filtering (`filtfilt`) alters the energy landscape of structural transient torques. Matching filtered kinematics against filtered torques can cause the optimization engine to output skewed physical parameter results.
+* **Refining the Residual Noise Variance**: Retaining the unconditioned raw torque allows the convex optimization routine (`fmincon`) to process the authentic signal environment, mapping structural link attributes accurately while allowing the objective function to cleanly isolate and reject high-frequency zero-mean sensor noise.
+
 
 ### 6. Independent Trajectory Cross-Validation
 To guarantee that the estimated parameter model does not overfit to the initial identification trajectory, the framework implements a strict multi-experiment cross-validation pipeline (`Step_6` through `Step_8`). 
