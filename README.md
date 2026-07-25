@@ -62,7 +62,12 @@ The signal processing pipeline executes the following sequential steps:
 3. **Second Central Difference**: Joint accelerations ($\ddot{q}$) are derived by running a secondary central-difference gradient operation directly on the synthesized velocities.
 4. **Target Vector Routing**: The estimation engine matches these states directly against the raw, unconditioned joint motor torques ($\tau$) to maintain direct structural visibility over raw torque profiles.
 
-### 6. Physical Consistency & Epsilon ($\varepsilon$) Sensitivity Analysis
+### 6. Independent Trajectory Cross-Validation
+To guarantee that the estimated parameter model does not overfit to the initial identification trajectory, the framework implements a strict multi-experiment cross-validation pipeline (`Step_6` through `Step_8`). 
+
+The identified model parameters are tested against an entirely independent validation trajectory profile featuring distinct amplitude profiles, frequencies, and workspace pathways. By driving the model-based reconstruction equations using this unseen dataset and checking estimated torque tracking against independent experimental recordings, the framework confirms that the parameter vector maps true structural hardware realities rather than single-trajectory behavior.
+
+### 7. Physical Consistency & Epsilon ($\varepsilon$) Sensitivity Analysis
 To keep parameters physically realistic, the `fmincon` objective function evaluates tracking error alongside strict structural constraints. It evaluates eigenvalues over a $5 \times 5 \times 5$ configuration grid (125 distinct workspace poses) to enforce a strictly positive-definite Mass/Inertia matrix ($M(q) > 0$).
 
 The user-tunable boundary threshold value `epsilon_val` acts as a crucial sensitivity parameter:
@@ -71,7 +76,7 @@ The user-tunable boundary threshold value `epsilon_val` acts as a crucial sensit
 
 This repository leverages an optimized balance of `epsilon_val = 0.037`, protecting model-based controllers from inverse-matrix spikes under feedback noise.
 
-### 7. Robust Computed Torque Control Subsystem (Step_11)
+### 8. Robust Computed Torque Control Subsystem (Step_11)
 The identified dynamic parameter matrix components directly feed the model-based controller. The system processes feedforward nonlinear rigid-body forces under high tracking feedback noise according to the following control law formulation:
 
 $$ \tau = M(q)\left[\ddot{q}_d + K_p e + K_d \dot{e}\right] + C(q, \dot{q})\dot{q} + G(q) + F(\dot{q}) $$
@@ -104,20 +109,4 @@ robot-identification-repo/
 ├── Step_5_Filtered_Parameter_estimation.m  <-- Data filtering and grid-constrained parameter solver
 ├── Step_6_testingTheEstimatedParameters.slx <-- Validation trajectory plant
 ├── Step_7_DataextractForSecondExpValidation.slx <-- Independent validation dataset parser
-├── Step_8_Validation_of_Estimation.m       <-- Multitarget tracking verification tool
-├── Step_9_ReformTheEstimatedMatrices.m     <-- Matrix decoupling reformer
-├── Step_10_CheckPositive.m                 <-- 27,000-point physical QA guard
-├── Step_11_Results.m                       <-- Metrics reporting and plotting utility
-└── Step_11_TheEstimatedINVDynamicsMatricesCTC.slx <-- Closed-loop noisy CTC tracking model
-```
-
----
-
-## ⚠️ Hardware & Memory Constraints Note
-
-Symbolically evaluating or validating a full joint-space mass matrix $M(q)$ across dynamic trajectories can introduce severe RAM allocations and processing delays. To prevent memory stack overflows, ensure your development environment has at least 16 GB of RAM when running the 27,000-point physical QA guard (`Step_10_CheckPositive.m`).
-
----
-
-
-
+├── Step_8_Validation_of_Estimation.m       <-- Multitarget cross-validation verification tool
