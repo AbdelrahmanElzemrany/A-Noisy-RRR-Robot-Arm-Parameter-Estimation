@@ -185,21 +185,9 @@ Where \(e = q_d - q\) represents the localized tracking joint error vector loop 
 
 ```
 
-$$
-\begin{array}{c}
-q_d, \dot{q}_d, \ddot{q}_d \\
-\downarrow \\
-\mathbf{[Tracking~Error~Loop]} \xrightarrow{\quad u \quad} \mathbf{[Inverse~Dynamics~Model]} \xrightarrow{\text{Joint Torques}} \mathbf{[Simscape~Robot]} \\
-(\theta_b) \\
-\end{array}
-$$
 
-$$
-\nwarrow \quad \text{Feedback } (q, \dot{q}) \quad \swarrow
-$$
 
-----------
-......
+
 
 <img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
 
