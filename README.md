@@ -181,15 +181,8 @@ Where $e = q_d - q$ represents the localized tracking joint error vector loop ar
 
 Where \(e = q_d - q\) represents the localized tracking joint error vector loop array driving system errors to zero.
 
-```
-q_d, q_d_dot, q_d_ddot 
-      |
-      v
-[Tracking Error Loop] ---> u ---> [ Inverse Dynamics Model ] ---> Joint Torques ---> [ Simscape Robot ]
-      ^                                  $$/theta_b $$                                        |
 
-      |                                                                                       |
-      +---------------------------------- Feedback (q, q_dot) --------------------------------+
+
 ```
 
 
