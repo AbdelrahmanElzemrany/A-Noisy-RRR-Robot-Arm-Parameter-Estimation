@@ -22,8 +22,8 @@ Because direct physical measurements are unavailable and theoretical CAD baselin
 
 ### 1. Custom Kinematic & Regressor Model (`Step_1`)
 The framework utilizes proximal Denavit-Hartenberg (DH) convention parameters to systematically construct the system kinematics. Every physical robotic link maps to a 12-parameter dynamic vector, spanning:
-* 10 Standard Inertial Parameters: Mass (\(m\)), 3 Center of Mass components (\(mx, my, mz\)), and 6 unique elements of the inertia tensor (\(I_{xx}, I_{yy}, I_{zz}, I_{xy}, I_{yz}, I_{xz}\)).
-* 2 Friction Parameters: Viscous and Coulomb friction additions (`ViscousCoulomb`).
+* **10 Standard Inertial Parameters**: Mass (\(m\)), 3 Center of Mass components (\(m_x, m_y, m_z\)), and 6 unique elements of the inertia tensor (\(I_{xx}, I_{yy}, I_{zz}, I_{xy}, I_{yz}, I_{xz}\)).
+* **2 Friction Parameters**: Viscous and Coulomb friction additions (`ViscousCoulomb`).
 
 These variables are analytically decoupled from the nonlinear equations of motion to form a custom symbolic identification regressor matrix (\(Y_b\)). This structural rearrangement ensures that the multi-joint dynamic torque matches a linear-in-the-parameters equation model:
 
@@ -52,7 +52,7 @@ Unlike noise-free variants, parameter identification scripts fail when processin
 Velocities (\(\dot{q}\)) and accelerations (\(\ddot{q}\)) are analytically synthesized via central-difference gradients, followed by a secondary low-pass filtering loop on the target torque channels (\(\tau\)) to isolate unmodeled sensor chatter before running the convex optimization engine.
 
 ### 6. Physical Consistency & Epsilon (\(\epsilon\)) Sensitivity Analysis
-To keep parameters physically realistic, the fmincon objective function evaluates tracking error alongside strict structural constraints. It evaluates eigenvalues over a \(5 \times 5 \times 5\) configuration grid (125 distinct workspace poses) to enforce a strictly positive-definite Mass/Inertia matrix (\(M(q) > 0\)).
+To keep parameters physically realistic, the `fmincon` objective function evaluates tracking error alongside strict structural constraints. It evaluates eigenvalues over a \(5 \times 5 \times 5\) configuration grid (125 distinct workspace poses) to enforce a strictly positive-definite Mass/Inertia matrix (\(M(q) > 0\)).
 
 The user-tunable boundary threshold value `epsilon_val` acts as a crucial sensitivity parameter:
 * **High Epsilon Threshold (\(\epsilon \ge 0.05\))**: Strongly guarantees physical conservatism and numerical stability, preventing matrix division spikes during high-gain control. However, setting it too high can over-constrain the solver, causing poor data-fitting accuracy.
