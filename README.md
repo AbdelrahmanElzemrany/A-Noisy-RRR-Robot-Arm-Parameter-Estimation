@@ -179,17 +179,19 @@ $$ \tau = M(q)\left[\ddot{q}_d + K_p e + K_d \dot{e}\right] + C(q, \dot{q})\dot{
 
 Where $e = q_d - q$ represents the localized tracking joint error vector loop array driving system errors to zero.
 
+Where \(e = q_d - q\) represents the localized tracking joint error vector loop array driving system errors to zero.
+
 ```text
 q_d, q_d_dot, q_d_ddot 
       |
       v
 [Tracking Error Loop] ---> u ---> [ Inverse Dynamics Model ] ---> Joint Torques ---> [ Simscape Robot ]
-      ^                                  ($\theta_b$)                                         |
+      ^                                  (\(\theta_b\))                                         |
 
       |                                                                                       |
       +---------------------------------- Feedback (q, q_dot) --------------------------------+
-
 ```
+
 <img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
 
 Figure 7 : The computeed torque controller RRR robot arm configuration surface level
