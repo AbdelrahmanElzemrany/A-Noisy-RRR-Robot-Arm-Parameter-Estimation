@@ -247,7 +247,7 @@ Figure 13 : The desired joint position commands and the tracking error at 400 / 
 
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (7)" src="https://github.com/user-attachments/assets/d74178e7-1fb3-47e2-8cd2-125a004d173f" />
 
- Figure 14 : The standalone Pd controller performance with 100 / 20 PD gains 
+ Figure 14 : The standalone PD controller performance with 100 / 20 PD gains 
 
 --------
 
@@ -256,7 +256,7 @@ Figure 13 : The desired joint position commands and the tracking error at 400 / 
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (8)" src="https://github.com/user-attachments/assets/8989a1b8-5e5d-48ea-bec8-7006bf2d4c56" />
 
 
- Figure 15 : The standalone Pd controller performance with 400 / 40 PD gains 
+ Figure 15 : The standalone PD controller performance with 400 / 40 PD gains 
 
 
 -------
