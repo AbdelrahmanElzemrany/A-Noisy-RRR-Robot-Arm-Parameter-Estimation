@@ -226,11 +226,24 @@ Figure 10 : Testing the feedback linearization of the shoulder joint with outer 
 ---
 <img width="1917" height="642" alt="image" src="https://github.com/user-attachments/assets/189641f3-590f-4d07-adbe-459382b22d63" />
 
-Figure 11 : The desired joint position and the tracking error at 100 / 20 PD Gains .
+Figure 11 : The desired joint position commands and the tracking error at 100 / 20 outer loop PD Gains.
+
+-----------
 
 <img width="1917" height="651" alt="image" src="https://github.com/user-attachments/assets/8ae21139-7d69-4805-8efa-d28d62e9f9af" />
 
-Figure 12 : The desired joint position and the tracking error at 400 / 40 PD Gains .
+Figure 12 : The desired joint position commands and the tracking error at 400 / 40 PD outer loop PD Gains.
+
+
+
+<img width="1280" height="704" alt="ezgif com-video-to-gif-converter (7)" src="https://github.com/user-attachments/assets/d74178e7-1fb3-47e2-8cd2-125a004d173f" />
+
+ Figure 13 : The standalone Pd controller performance with 100 / 20 PD gains 
+
+--------
+<img width="1917" height="618" alt="image" src="https://github.com/user-attachments/assets/a2b4afb4-972c-473f-a083-26c2f827a565" />
+
+Figure 14 : The desired joint position commands and the tracking error in standalone PD controller at 100 / 20 PD gains
 
 
 ---
