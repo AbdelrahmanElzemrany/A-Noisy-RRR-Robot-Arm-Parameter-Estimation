@@ -214,6 +214,20 @@ Figure 8 : The construction of the computed torque controller
 
 ---
 
+<img width="746" height="422" alt="Step_11_TheEstimatedINVDynamicsMatricesCTC-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/db7447f4-1936-4606-9f1b-6f26dce518d1" />
+
+Figure 9 : Testing the feedback linearization of the shoulder joint 
+
+---
+<img width="1917" height="642" alt="image" src="https://github.com/user-attachments/assets/189641f3-590f-4d07-adbe-459382b22d63" />
+
+<img width="1917" height="651" alt="image" src="https://github.com/user-attachments/assets/8ae21139-7d69-4805-8efa-d28d62e9f9af" />
+
+
+
+
+---
+
 ## 📂 Repository Architecture & Pipeline
 
 Run the scripts in numerical order to move from kinematic setup to validated CTC control:
