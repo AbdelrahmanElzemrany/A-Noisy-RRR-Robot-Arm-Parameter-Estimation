@@ -121,15 +121,24 @@ Filtering the measured torque channels introduces critical operational risks to 
 * **Refining the Residual Noise Variance**: Retaining the unconditioned raw torque allows the convex optimization routine (`fmincon`) to process the authentic signal environment, mapping structural link attributes accurately while allowing the objective function to cleanly isolate and reject high-frequency zero-mean sensor noise.
 
 
+
+
 ### 6. Independent Trajectory Cross-Validation
 To guarantee that the estimated parameter model does not overfit to the initial identification trajectory, the framework implements a strict multi-experiment cross-validation pipeline (`Step_6` through `Step_8`). 
+
+
+
+<img width="1913" height="912" alt="image" src="https://github.com/user-attachments/assets/e1369e9e-64e7-4fd7-8d52-d18e6d6aa187" />
+
+Figure 5 : A comparison between the estimated friction and the modeled friction in the simpscape plant
+
 
 The identified model parameters are tested against an entirely independent validation trajectory profile featuring distinct amplitude profiles, frequencies, and workspace pathways. By driving the model-based reconstruction equations using this unseen dataset and checking estimated torque tracking against independent experimental recordings, the framework confirms that the parameter vector maps true structural hardware realities rather than single-trajectory behavior.
 
 
 ---------------
 <img width="1917" height="918" alt="image" src="https://github.com/user-attachments/assets/82a2b9f7-5c0b-411c-a237-619c27e82831" />
-Figure 5 A slow trajectory validation.
+Figure 6 A slow trajectory validation.
 
 -----------
 | Experiment element | Metric | Value |
@@ -141,7 +150,7 @@ Figure 5 A slow trajectory validation.
 
 ------------
 <img width="1917" height="923" alt="image" src="https://github.com/user-attachments/assets/c3d03bd5-51cd-40f5-8c4d-4eeb1b130cac" />
-Figure 6 A fast and aggressive trajectory validation
+Figure 7 A fast and aggressive trajectory validation
 
 ----------
 
@@ -203,12 +212,12 @@ $$
 ...
 <img width="1870" height="722" alt="image" src="https://github.com/user-attachments/assets/9b470e94-18e4-4dbe-bda7-7cc80cd3d1fd" />
 
-Figure 7 : The computeed torque controller RRR robot arm configuration surface level
+Figure 8 : The computeed torque controller RRR robot arm configuration surface level
 
 ---------
 <img width="1405" height="731" alt="image" src="https://github.com/user-attachments/assets/ea83d2de-6d63-4b2f-838a-9a8648f3f857" />
 
-Figure 8 : The construction of the computed torque controller 
+Figure 9 : The construction of the computed torque controller 
 
 
 
@@ -216,29 +225,29 @@ Figure 8 : The construction of the computed torque controller
 
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (4)" src="https://github.com/user-attachments/assets/b137dd49-c040-4c3c-8111-8880e5bbdc93" />
 
-Figure 9 : Testing the feedback linearization of joint 2 with outerloop gains Kp=100 Kd=20
+Figure 10 : Testing the feedback linearization of joint 2 with outerloop gains Kp=100 Kd=20
 
 ----
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (5)" src="https://github.com/user-attachments/assets/4612e6f9-abcc-4f4d-8a13-17d2681724c8" />
 
-Figure 10 : Testing the feedback linearization of the shoulder joint with outer loop gains Kp=400 and Kd=40
+Figure 11 : Testing the feedback linearization of the shoulder joint with outer loop gains Kp=400 and Kd=40
 
 ---
 <img width="1917" height="642" alt="image" src="https://github.com/user-attachments/assets/189641f3-590f-4d07-adbe-459382b22d63" />
 
-Figure 11 : The desired joint position commands and the tracking error at 100 / 20 outer loop PD Gains.
+Figure 12 : The desired joint position commands and the tracking error at 100 / 20 outer loop PD Gains.
 
 -----------
 
 <img width="1917" height="651" alt="image" src="https://github.com/user-attachments/assets/8ae21139-7d69-4805-8efa-d28d62e9f9af" />
 
-Figure 12 : The desired joint position commands and the tracking error at 400 / 40 PD outer loop PD Gains.
+Figure 13 : The desired joint position commands and the tracking error at 400 / 40 PD outer loop PD Gains.
 
 
 
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (7)" src="https://github.com/user-attachments/assets/d74178e7-1fb3-47e2-8cd2-125a004d173f" />
 
- Figure 13 : The standalone Pd controller performance with 100 / 20 PD gains 
+ Figure 14 : The standalone Pd controller performance with 100 / 20 PD gains 
 
 --------
 
@@ -247,19 +256,19 @@ Figure 12 : The desired joint position commands and the tracking error at 400 / 
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (8)" src="https://github.com/user-attachments/assets/8989a1b8-5e5d-48ea-bec8-7006bf2d4c56" />
 
 
- Figure 14 : The standalone Pd controller performance with 400 / 40 PD gains 
+ Figure 15 : The standalone Pd controller performance with 400 / 40 PD gains 
 
 
 -------
 
 <img width="1917" height="618" alt="image" src="https://github.com/user-attachments/assets/a2b4afb4-972c-473f-a083-26c2f827a565" />
 
-Figure 15 : The desired joint position commands and the tracking error in standalone PD controller at 100 / 20 PD gains
+Figure 16 : The desired joint position commands and the tracking error in standalone PD controller at 100 / 20 PD gains
 
 
 <img width="1917" height="632" alt="image" src="https://github.com/user-attachments/assets/52a86ada-aea8-4128-b79a-1b2611233c10" />
 
-Figure 16 : The desired joint position commands and the tracking error in standalone PD controller at 400 / 40 PD gains
+Figure 17 : The desired joint position commands and the tracking error in standalone PD controller at 400 / 40 PD gains
 
 ## 📂 Repository Architecture & Pipeline
 
