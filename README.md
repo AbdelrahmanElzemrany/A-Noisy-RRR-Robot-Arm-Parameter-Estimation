@@ -214,9 +214,14 @@ Figure 8 : The construction of the computed torque controller
 
 ---
 
+<img width="1280" height="704" alt="ezgif com-video-to-gif-converter (4)" src="https://github.com/user-attachments/assets/b137dd49-c040-4c3c-8111-8880e5bbdc93" />
+
+Figure 9 Testing the feedback linearization of joint 2 with outerloop gains Kp=100 Kd=20
+
+----
 <img width="746" height="422" alt="Step_11_TheEstimatedINVDynamicsMatricesCTC-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/db7447f4-1936-4606-9f1b-6f26dce518d1" />
 
-Figure 9 : Testing the feedback linearization of the shoulder joint 
+Figure 10 : Testing the feedback linearization of the shoulder joint with outer loop gains Kp=400 and Kd=40
 
 ---
 <img width="1917" height="642" alt="image" src="https://github.com/user-attachments/assets/189641f3-590f-4d07-adbe-459382b22d63" />
