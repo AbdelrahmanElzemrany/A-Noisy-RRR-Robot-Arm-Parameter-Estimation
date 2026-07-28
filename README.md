@@ -241,12 +241,25 @@ Figure 12 : The desired joint position commands and the tracking error at 400 / 
  Figure 13 : The standalone Pd controller performance with 100 / 20 PD gains 
 
 --------
+
+
+
+<img width="1280" height="704" alt="ezgif com-video-to-gif-converter (8)" src="https://github.com/user-attachments/assets/8989a1b8-5e5d-48ea-bec8-7006bf2d4c56" />
+
+
+ Figure 14 : The standalone Pd controller performance with 400 / 40 PD gains 
+
+
+-------
+
 <img width="1917" height="618" alt="image" src="https://github.com/user-attachments/assets/a2b4afb4-972c-473f-a083-26c2f827a565" />
 
-Figure 14 : The desired joint position commands and the tracking error in standalone PD controller at 100 / 20 PD gains
+Figure 15 : The desired joint position commands and the tracking error in standalone PD controller at 100 / 20 PD gains
 
 
----
+<img width="1917" height="632" alt="image" src="https://github.com/user-attachments/assets/52a86ada-aea8-4128-b79a-1b2611233c10" />
+
+Figure 16 : The desired joint position commands and the tracking error in standalone PD controller at 400 / 40 PD gains
 
 ## 📂 Repository Architecture & Pipeline
 
