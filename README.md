@@ -188,7 +188,7 @@ $$ \tau = M(q)\left[\ddot{q}_d + K_p e + K_d \dot{e}\right] + C(q, \dot{q})\dot{
 
 Where $e = q_d - q$ represents the localized tracking joint error vector loop array driving system errors to zero.
 
-Where \(e = q_d - q\) represents the localized tracking joint error vector loop array driving system errors to zero.
+
 
 
 
