@@ -130,7 +130,7 @@ To guarantee that the estimated parameter model does not overfit to the initial 
 
 <img width="1913" height="912" alt="image" src="https://github.com/user-attachments/assets/e1369e9e-64e7-4fd7-8d52-d18e6d6aa187" />
 
-Figure 5 : A comparison between the estimated friction and the modeled friction in the simpscape plant
+Figure 5 : A comparison between the estimated friction and the modeled friction in the simscape plant
 
 
 The identified model parameters are tested against an entirely independent validation trajectory profile featuring distinct amplitude profiles, frequencies, and workspace pathways. By driving the model-based reconstruction equations using this unseen dataset and checking estimated torque tracking against independent experimental recordings, the framework confirms that the parameter vector maps true structural hardware realities rather than single-trajectory behavior.
