@@ -216,7 +216,7 @@ Figure 8 : The construction of the computed torque controller
 
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (4)" src="https://github.com/user-attachments/assets/b137dd49-c040-4c3c-8111-8880e5bbdc93" />
 
-Figure 9 Testing the feedback linearization of joint 2 with outerloop gains Kp=100 Kd=20
+Figure 9 : Testing the feedback linearization of joint 2 with outerloop gains Kp=100 Kd=20
 
 ----
 <img width="1280" height="704" alt="ezgif com-video-to-gif-converter (5)" src="https://github.com/user-attachments/assets/4612e6f9-abcc-4f4d-8a13-17d2681724c8" />
@@ -226,9 +226,11 @@ Figure 10 : Testing the feedback linearization of the shoulder joint with outer 
 ---
 <img width="1917" height="642" alt="image" src="https://github.com/user-attachments/assets/189641f3-590f-4d07-adbe-459382b22d63" />
 
+Figure 11 : The desired joint position and the tracking error at 100 / 20 PD Gains .
+
 <img width="1917" height="651" alt="image" src="https://github.com/user-attachments/assets/8ae21139-7d69-4805-8efa-d28d62e9f9af" />
 
-
+Figure 12 : The desired joint position and the tracking error at 400 / 40 PD Gains .
 
 
 ---
